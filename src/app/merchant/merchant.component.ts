@@ -48,7 +48,8 @@ export class MerchantComponent implements OnInit {
   c: any;
   chart;
   //url: string = "https://zuru.co.ke";
-  url: string = "http://localhost:8090";
+  //url: string = "http://localhost:8090";
+  url: string = "http://52.91.60.228:8090";
 
   constructor(private notifyService: NotificationService, private api: ApiService,
     private router: Router, private http: HttpClient,private modalService: NgbModal) { }

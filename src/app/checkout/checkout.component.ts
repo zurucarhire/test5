@@ -1,5 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiService } from '../service/api.service';
@@ -82,5 +83,20 @@ export class CheckoutComponent implements OnInit {
 
   closeModal(){
     this.modalService.dismissAll();
+  }
+
+  submit(form: NgForm){
+    console.log(form.value);
+    let phone = form.value.phone;
+
+    if (phone.length != 12){
+      this.notifyService.showError("Please enter a valid phone number (254xxxxxxxxx)","Invalid Phone");
+      return;
+    }
+
+    this.openModal(this.paymentModal, 'sm');
+    this.api.mpesaExpress(2, 1, "+"+phone,20).subscribe(data => {
+      console.log(data)
+    });
   }
 }

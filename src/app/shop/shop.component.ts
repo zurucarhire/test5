@@ -9,11 +9,13 @@ import { ApiService } from '../service/api.service';
 })
 export class ShopComponent implements OnInit {
 
+  user: any;
   items;
   //items = [{image: "mother1.webp"}, {image: "mother2.webp"}, {image: "mother3.webp"}];
   constructor(private router: Router, private api: ApiService) { }
 
   ngOnInit(): void {
+    this.user = JSON.parse(sessionStorage.getItem('user'));
     this.api.getProductCategories().subscribe(
       data => {
           console.log(data);
@@ -28,8 +30,12 @@ export class ShopComponent implements OnInit {
 
   itemDetail(name){
     console.log(name)
+    if (this.user == null){
+      this.router.navigate(['/login']);
+      return;
+    } 
+    
     this.router.navigate(['/shopdetail', name]);
-    //this.router.navigate(['/itemdetail', item, cost]);
   }
 
 }
